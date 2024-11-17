@@ -1,6 +1,7 @@
 import time
 from argparse import ArgumentError
 
+from conversions import c_to_f
 from data_packet import DataPacket
 from enum import Enum
 from sensor import Sensor
@@ -43,7 +44,7 @@ class Aht20(Sensor):
                 raw_humidity = (data[1] << 12) | (data[2] << 4) | (data[3] >> 4)
                 raw_temp = ((data[3] & 0x0F) << 16) | (data[4] << 8) | data[5]
                 relative_humidity = (raw_humidity / (2**20)) * 100
-                temperature = ((raw_temp / (2**20)) * 200) - 50
+                temperature = c_to_f(((raw_temp / (2**20)) * 200) - 50)
                 return DataPacket(temperature=temperature, humidity=relative_humidity)
             else:
                 retries += 1
