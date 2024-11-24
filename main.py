@@ -9,7 +9,7 @@ from influxdb_interface import InfluxDbInterface
 class RPiTempTracker:
     def __init__(
             self,
-            ms_per_sample : int = 1000,
+            ms_per_sample : int = 2000,
             db_type: str="influxdb",
             sensor_type: str="aht20",
             port: int=1):
@@ -64,7 +64,7 @@ if __name__ == "__main__":
         '-t',
         '--period',
         type=int,
-        default=1000,
+        default=2000,
         help="Max period in ms between samples"
     )
     parser.add_argument(
@@ -84,5 +84,5 @@ if __name__ == "__main__":
         help="Type of sensor to use"
     )
     args = parser.parse_args()
-    instance = RPiTempTracker(args.period / 1000, args.db_type, args.sensor_type, args.port)
+    instance = RPiTempTracker(args.period, args.db_type, args.sensor_type, args.port)
     instance.run()
