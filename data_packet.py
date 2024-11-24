@@ -5,3 +5,4 @@ from dataclasses import dataclass
 class DataPacket:
     temperature: float
     humidity: float
+    timestamp: int

@@ -45,7 +45,7 @@ class Aht20(Sensor):
                 raw_temp = ((data[3] & 0x0F) << 16) | (data[4] << 8) | data[5]
                 relative_humidity = (raw_humidity / (2**20)) * 100
                 temperature = c_to_f(((raw_temp / (2**20)) * 200) - 50)
-                return DataPacket(temperature=temperature, humidity=relative_humidity)
+                return DataPacket(temperature=temperature, humidity=relative_humidity, timestamp=int(time.time() * 1e9))
             else:
                 retries += 1
         return None
