@@ -27,7 +27,8 @@ class RPiTempTracker:
             port = os.getenv("INFLUX_PORT")
             device_name = os.getenv("INFLUX_DEVICE_NAME")
             location = os.getenv("INFLUX_LOCATION")
-            url = f"http://localhost:{port}"
+            host = os.getenv("INFLUX_HOST", "localhost")
+            url = f"http://{host}:{port}"
             org = os.getenv("INFLUX_ORG")
             self.db_interface = InfluxDbInterface(
                 url=url,
