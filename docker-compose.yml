@@ -35,9 +35,14 @@ services:
       - INFLUX_BUCKET=${INFLUX_BUCKET}
       - INFLUX_API_KEY=${INFLUX_API_KEY}
       - INFLUX_PORT=8086
+      - INFLUX_HOST=influxdb
       - INFLUX_ORG=${INFLUX_ORG}
       - INFLUX_DEVICE_NAME=${INFLUX_DEVICE_NAME}
       - INFLUX_LOCATION=${INFLUX_LOCATION}
+      - I2C_PORT=1
+      - SAMPLE_PERIOD_MS=2000
+      - DB_TYPE=influxdb
+      - SENSOR_TYPE=aht20
     depends_on:
       - influxdb
     restart: unless-stopped

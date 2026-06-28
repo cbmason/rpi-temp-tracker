@@ -7,28 +7,29 @@ from influxdb_interface import InfluxDbInterface
 
 
 class RPiTempTracker:
-    def __init__(
-            self,
-            ms_per_sample : int = 2000,
-            db_type: str="influxdb",
-            sensor_type: str="aht20",
-            port: int=1):
+    def __init__(self):
         load_dotenv()
+
+        msPerSample = int(os.getenv("SAMPLE_PERIOD_MS", "2000"))
+        db_type = os.getenv("DB_TYPE", "influxdb")
+        sensor_type = os.getenv("SENSOR_TYPE", "aht20")
+        sensor_port = int(os.getenv("SENSOR_PORT", "1"))
+
         self.msPerSample = max(ms_per_sample, 100) # Max
 
         # Sensor setup
         if sensor_type.lower() == "aht20":
-            self.sensor = Aht20(port)
+            self.sensor = Aht20(sensor_port)
 
         # Database setup
         if db_type.lower() == "influxdb":
             bucket = os.getenv("INFLUX_BUCKET")
             api_key = os.getenv("INFLUX_API_KEY")
-            port = os.getenv("INFLUX_PORT")
+            influx_port = os.getenv("INFLUX_PORT")
             device_name = os.getenv("INFLUX_DEVICE_NAME")
             location = os.getenv("INFLUX_LOCATION")
             host = os.getenv("INFLUX_HOST", "localhost")
-            url = f"http://{host}:{port}"
+            url = f"http://{host}:{influx_port}"
             org = os.getenv("INFLUX_ORG")
             self.db_interface = InfluxDbInterface(
                 url=url,
@@ -43,47 +44,16 @@ class RPiTempTracker:
     def run(self):
         print("Starting RPiTempTracker service.  Press ctrl+c to exit")
         self.sensor.connect()
+        s_per_sample = self.msPerSample / 1000
         while True:
             start_time = time.time()
             sample = self.sensor.sample_data()
             self.db_interface.write_sample(sample)
             end_time = time.time()
             elapsed = end_time - start_time
-            time.sleep(max((self.msPerSample / 1000) - elapsed, 0))
+            time.sleep(max(s_per_sample - elapsed, 0))
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument(
-        '-p',
-        '--port',
-        type=int,
-        default=1,
-        help="The I2C port to connect to"
-    )
-    parser.add_argument(
-        '-t',
-        '--period',
-        type=int,
-        default=2000,
-        help="Max period in ms between samples"
-    )
-    parser.add_argument(
-        '-d',
-        '--db_type',
-        type=str,
-        choices=['influxdb'],
-        default="influxdb",
-        help="Type of database to use"
-    )
-    parser.add_argument(
-        '-s',
-        '--sensor_type',
-        type=str,
-        choices=['aht20'],
-        default="aht20",
-        help="Type of sensor to use"
-    )
-    args = parser.parse_args()
-    instance = RPiTempTracker(args.period, args.db_type, args.sensor_type, args.port)
+    instance = RPiTempTracker()
     instance.run()
