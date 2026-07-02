@@ -32,13 +32,13 @@
       },
       "id": 6,
       "panels": [],
-      "title": "Chris' Office",
+      "title": "${LOCATION}",
       "type": "row"
     },
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "description": "Measured using AHT20",
       "fieldConfig": {
@@ -115,9 +115,9 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -127,7 +127,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -277,9 +277,9 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -289,7 +289,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "description": "Measured using AHT20",
       "fieldConfig": {
@@ -320,7 +320,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "temperature {device=\"RPi_aht20\", location=\"chris_office\"}"
+              "options": "temperature {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
             },
             "properties": []
           }
@@ -354,9 +354,9 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -366,7 +366,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "description": "Change the time setting above to see more",
       "fieldConfig": {
@@ -432,7 +432,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "humidity {device=\"RPi_aht20\", location=\"chris_office\"}"
+              "options": "humidity {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
             },
             "properties": [
               {
@@ -455,7 +455,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "temperature {device=\"RPi_aht20\", location=\"chris_office\"}"
+              "options": "temperature {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
             },
             "properties": [
               {
@@ -492,16 +492,16 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
         },
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
           "hide": false,
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "B"
         }
       ],
@@ -511,7 +511,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -571,7 +571,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "max {device=\"RPi_aht20\", location=\"chris_office\"}"
+              "options": "max {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
             },
             "properties": [
               {
@@ -584,7 +584,7 @@
               },
               {
                 "id": "custom.fillBelowTo",
-                "value": "min {device=\"RPi_aht20\", location=\"chris_office\"}"
+                "value": "min {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
               },
               {
                 "id": "custom.gradientMode",
@@ -634,16 +634,16 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: -1y)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\n  |> set(key: \"_field\", value: \"min\")\n  |> yield(name: \"min\")\n",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: -1y)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\n  |> set(key: \"_field\", value: \"min\")\n  |> yield(name: \"min\")\n",
           "refId": "A"
         },
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
           "hide": false,
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: -1y)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\n  |> set(key: \"_field\", value: \"max\")\n  |> yield(name: \"max\")\n",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: -1y)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\n  |> set(key: \"_field\", value: \"max\")\n  |> yield(name: \"max\")\n",
           "refId": "B"
         }
       ],
@@ -654,7 +654,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce8ise8fhy2v4d"
+        "uid": "rpi-temp-influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -705,7 +705,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "temperature {device=\"RPi_aht20\", location=\"chris_office\"}"
+              "options": "temperature {device=\"RPi_aht20\", location=\"${LOCATION}\"}"
             },
             "properties": [
               {
@@ -751,16 +751,16 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "A"
         },
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce8ise8fhy2v4d"
+            "uid": "rpi-temp-influxdb"
           },
           "hide": false,
-          "query": "from(bucket: \"chris_office\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"chris_office\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"${LOCATION}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"RPiSensor\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"device\"] == \"RPi_aht20\")\n  |> filter(fn: (r) => r[\"location\"] == \"${LOCATION}\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\n  |> yield(name: \"mean\")",
           "refId": "B"
         }
       ],
@@ -782,7 +782,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Chris Office",
+  "title": "${LOCATION}",
   "uid": "de8peivjkllhcc",
   "version": 39
 }
