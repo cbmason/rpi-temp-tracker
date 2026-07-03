@@ -27,7 +27,7 @@ class RPiTempTracker:
             api_key = os.getenv("INFLUX_API_KEY")
             influx_port = os.getenv("INFLUX_PORT")
             device_name = os.getenv("INFLUX_DEVICE_NAME")
-            location = os.getenv("INFLUX_LOCATION")
+            location = os.getenv("LOCATION")
             host = os.getenv("INFLUX_HOST", "localhost")
             url = f"http://{host}:{influx_port}"
             org = os.getenv("INFLUX_ORG")

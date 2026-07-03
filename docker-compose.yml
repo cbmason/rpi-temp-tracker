@@ -10,7 +10,7 @@ services:
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUX_USERNAME}
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUX_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUX_ORG}
-      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUX_BUCKET}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${LOCATION}
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_API_KEY}
     restart: unless-stopped
 
@@ -23,22 +23,27 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_AUTH_DISABLE_LOGIN_FORM=false  # keep login available for admin
+      - LOCATION=${LOCATION}
     depends_on:
       - influxdb
     restart: unless-stopped
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
 
   sampler:
     build: .
     devices:
       - /dev/i2c-1:/dev/i2c-1
     environment:
-      - INFLUX_BUCKET=${INFLUX_BUCKET}
+      - INFLUX_BUCKET=${LOCATION}
       - INFLUX_API_KEY=${INFLUX_API_KEY}
       - INFLUX_PORT=8086
       - INFLUX_HOST=influxdb
       - INFLUX_ORG=${INFLUX_ORG}
       - INFLUX_DEVICE_NAME=${INFLUX_DEVICE_NAME}
-      - INFLUX_LOCATION=${INFLUX_LOCATION}
+      - LOCATION=${LOCATION}
       - I2C_PORT=1
       - SAMPLE_PERIOD_MS=2000
       - DB_TYPE=influxdb

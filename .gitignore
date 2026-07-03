@@ -1,1 +1,2 @@
 .idea/*
+grafana/provisioning/dashboards/dashboard.json
