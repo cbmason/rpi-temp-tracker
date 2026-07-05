@@ -19,6 +19,7 @@ def run_test(
     # Connect to the device
     device = Aht20(i2c_port)
     device.connect()
+    device.initialize()
 
     # Do a few samples
     for i in range(num_samples):

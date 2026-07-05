@@ -30,6 +30,7 @@ class Aht20(Sensor):
         status = self.i2cConnection.read_byte_data(self.i2cAddress, 0x71)
         if status & 0x08 != 0x08:
             self._write_initialize_command()
+            time.sleep(0.01)  # datasheet: wait 10 ms after calibration command
 
     def sample_data(self) -> DataPacket | None:
         if self.i2cConnection is None:

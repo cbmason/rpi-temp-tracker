@@ -13,9 +13,9 @@ class RPiTempTracker:
         msPerSample = int(os.getenv("SAMPLE_PERIOD_MS", "2000"))
         db_type = os.getenv("DB_TYPE", "influxdb")
         sensor_type = os.getenv("SENSOR_TYPE", "aht20")
-        sensor_port = int(os.getenv("SENSOR_PORT", "1"))
+        sensor_port = int(os.getenv("I2C_PORT", "1"))
 
-        self.msPerSample = max(ms_per_sample, 100) # Max
+        self.msPerSample = max(msPerSample, 100)  # Floor at 100 ms
 
         # Sensor setup
         if sensor_type.lower() == "aht20":
@@ -44,6 +44,7 @@ class RPiTempTracker:
     def run(self):
         print("Starting RPiTempTracker service.  Press ctrl+c to exit")
         self.sensor.connect()
+        self.sensor.initialize()
         s_per_sample = self.msPerSample / 1000
         while True:
             start_time = time.time()

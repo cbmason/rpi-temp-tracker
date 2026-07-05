@@ -27,10 +27,11 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
       - GF_AUTH_DISABLE_LOGIN_FORM=false  # keep login available for admin
       - LOCATION=${LOCATION}
+      - INFLUX_ORG=${INFLUX_ORG}
+      - INFLUX_API_KEY=${INFLUX_API_KEY}
     depends_on:
       - influxdb
     restart: unless-stopped
-    entrypoint: ["/bin/bash", "/entrypoint.sh"]
 
   sampler:
     build: .

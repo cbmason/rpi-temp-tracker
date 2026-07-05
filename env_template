@@ -1,5 +1,8 @@
 LOCATION=TODO
 
+# Must match the device filter baked into the Grafana dashboard queries
+INFLUX_DEVICE_NAME=RPi_aht20
+
 INFLUX_ORG=home
 INFLUX_USERNAME=TODO
 INFLUX_PASSWORD=TODO
