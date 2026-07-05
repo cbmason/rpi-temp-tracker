@@ -49,7 +49,10 @@ class RPiTempTracker:
         while True:
             start_time = time.time()
             sample = self.sensor.sample_data()
-            self.db_interface.write_sample(sample)
+            if sample is not None:
+                self.db_interface.write_sample(sample)
+            else:
+                print("Skipping write: sensor read failed")
             end_time = time.time()
             elapsed = end_time - start_time
             time.sleep(max(s_per_sample - elapsed, 0))

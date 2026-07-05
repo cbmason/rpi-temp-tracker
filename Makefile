@@ -1,7 +1,11 @@
 # Load .env so LOCATION is available for host-side templating.
 # (`-include` avoids a hard error before .env exists.)
 -include .env
-export
+# Export only LOCATION (what envsubst needs). A bare `export` would push every
+# .env value into the environment docker compose runs in, and shell env
+# overrides the .env file in compose interpolation - so a `$` in a secret could
+# get rewritten before it reaches the containers. Let compose read .env itself.
+export LOCATION
 
 DASHBOARD_TEMPLATE := grafana/dashboard.template.json
 DASHBOARD_OUT      := grafana/provisioning/dashboards/dashboard.json

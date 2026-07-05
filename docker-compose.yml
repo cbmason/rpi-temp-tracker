@@ -13,6 +13,12 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=${LOCATION}
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_API_KEY}
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 12
+      start_period: 15s
 
   grafana:
     image: grafana/grafana:latest
@@ -30,7 +36,8 @@ services:
       - INFLUX_ORG=${INFLUX_ORG}
       - INFLUX_API_KEY=${INFLUX_API_KEY}
     depends_on:
-      - influxdb
+      influxdb:
+        condition: service_healthy
     restart: unless-stopped
 
   sampler:
@@ -50,7 +57,8 @@ services:
       - DB_TYPE=influxdb
       - SENSOR_TYPE=aht20
     depends_on:
-      - influxdb
+      influxdb:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:

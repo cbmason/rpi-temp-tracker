@@ -7,7 +7,7 @@ datasources:
     uid: rpi-temp-influxdb      # pin to the same UID as your dashboard expects
     jsonData:
       version: Flux
-      organization: ${INFLUX_ORG}
-      defaultBucket: ${LOCATION}
+      organization: $INFLUX_ORG
+      defaultBucket: $LOCATION
     secureJsonData:
-      token: ${INFLUX_API_KEY}
+      token: $INFLUX_API_KEY
