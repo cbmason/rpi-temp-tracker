@@ -5,7 +5,7 @@ from conversions import c_to_f
 from data_packet import DataPacket
 from enum import Enum
 from sensor import Sensor
-from smbus3 import SMBus
+from smbus3 import SMBus, i2c_msg
 
 
 class Aht20(Sensor):
