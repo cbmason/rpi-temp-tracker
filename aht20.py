@@ -62,7 +62,8 @@ class Aht20(Sensor):
         self.i2cConnection.write_byte(self.i2cAddress, byte_to_write)
 
     def _write_bytes(self, bytes_to_write: list[int]):
-        self.i2cConnection.write_i2c_block_data(self.i2cAddress, 0, bytes_to_write)
+        self.i2cConnection.write_i2c_block_data(
+        self.i2cAddress, bytes_to_write[0], bytes_to_write[1:])
 
     def _read_bytes(self, count: int) -> list[int]:
         return self.i2cConnection.read_i2c_block_data(self.i2cAddress, 0x00, count)
